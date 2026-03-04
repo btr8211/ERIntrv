@@ -1,6 +1,0 @@
-C:\Work\Jason\erintrview\src\CaseManagement.Common\bin\Debug\CaseManagement.Common.dll
-C:\Work\Jason\erintrview\src\CaseManagement.Common\bin\Debug\CaseManagement.Common.pdb
-C:\Work\Jason\erintrview\src\CaseManagement.Common\obj\Debug\CaseManagement.Common.csproj.AssemblyReference.cache
-C:\Work\Jason\erintrview\src\CaseManagement.Common\obj\Debug\CaseManagement.Common.csproj.CoreCompileInputs.cache
-C:\Work\Jason\erintrview\src\CaseManagement.Common\obj\Debug\CaseManagement.Common.dll
-C:\Work\Jason\erintrview\src\CaseManagement.Common\obj\Debug\CaseManagement.Common.pdb

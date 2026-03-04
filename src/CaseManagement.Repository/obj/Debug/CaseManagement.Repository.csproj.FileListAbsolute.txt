@@ -1,9 +1,0 @@
-C:\Work\Jason\erintrview\src\CaseManagement.Repository\obj\Debug\CaseManagement.Repository.csproj.AssemblyReference.cache
-C:\Work\Jason\erintrview\src\CaseManagement.Repository\obj\Debug\CaseManagement.Repository.csproj.CoreCompileInputs.cache
-C:\Work\Jason\erintrview\src\CaseManagement.Repository\bin\Debug\CaseManagement.Repository.dll
-C:\Work\Jason\erintrview\src\CaseManagement.Repository\bin\Debug\CaseManagement.Repository.pdb
-C:\Work\Jason\erintrview\src\CaseManagement.Repository\bin\Debug\Dapper.dll
-C:\Work\Jason\erintrview\src\CaseManagement.Repository\bin\Debug\Dapper.xml
-C:\Work\Jason\erintrview\src\CaseManagement.Repository\obj\Debug\CaseManagement.Repository.csproj.CopyComplete
-C:\Work\Jason\erintrview\src\CaseManagement.Repository\obj\Debug\CaseManagement.Repository.dll
-C:\Work\Jason\erintrview\src\CaseManagement.Repository\obj\Debug\CaseManagement.Repository.pdb
