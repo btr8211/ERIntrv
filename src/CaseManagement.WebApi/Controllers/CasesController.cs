@@ -51,32 +51,45 @@ namespace CaseManagement.WebApi.Controllers
             return Content(HttpStatusCode.InternalServerError, response);
         }
 
-        /// <summary>
-        /// 取得所有案件
-        /// GET api/cases
-        /// </summary>
-        [HttpGet]
-        [Route("")]
-        public IHttpActionResult GetAllCases()
-        {
-            var cases = _caseService.GetAllCases();
-            var response = cases.Select(MapToResponse);
-            return Ok(response);
-        }
+        // [已停用] GetAllCases 功能暫時停用
+        // /// <summary>
+        // /// 取得所有案件
+        // /// GET api/cases
+        // /// </summary>
+        // [HttpGet]
+        // [Route("")]
+        // public IHttpActionResult GetAllCases()
+        // {
+        //     var cases = _caseService.GetAllCases();
+        //     var response = cases.Select(MapToResponse);
+        //     return Ok(response);
+        // }
 
         /// <summary>
         /// 取得單一案件
         /// GET api/cases/{caseNumber}
+        /// 需要在 Header 中提供 X-Case-Password
         /// </summary>
         [HttpGet]
         [Route("{caseNumber}")]
         public IHttpActionResult GetCase(string caseNumber)
         {
-            var caseDto = _caseService.GetCase(caseNumber);
+            // 從 Header 取得密碼
+            var password = Request.Headers.Contains("X-Case-Password")
+                ? Request.Headers.GetValues("X-Case-Password").FirstOrDefault()
+                : null;
+
+            // 密碼為必填
+            if (string.IsNullOrEmpty(password))
+            {
+                return Content(HttpStatusCode.Unauthorized, new { Success = false, Message = "缺少案件密碼" });
+            }
+
+            var caseDto = _caseService.GetCase(caseNumber, password);
 
             if (caseDto == null)
             {
-                return NotFound();
+                return Content(HttpStatusCode.Unauthorized, new { Success = false, Message = "案件不存在或密碼錯誤" });
             }
 
             return Ok(MapToResponse(caseDto));
@@ -85,6 +98,7 @@ namespace CaseManagement.WebApi.Controllers
         /// <summary>
         /// 更新案件
         /// PUT api/cases/{caseNumber}
+        /// 需要在 Header 中提供 X-Case-Password
         /// </summary>
         [HttpPut]
         [Route("{caseNumber}")]
@@ -95,10 +109,21 @@ namespace CaseManagement.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var existingCase = _caseService.GetCase(caseNumber);
+            // 從 Header 取得密碼
+            var password = Request.Headers.Contains("X-Case-Password")
+                ? Request.Headers.GetValues("X-Case-Password").FirstOrDefault()
+                : null;
+
+            // 密碼為必填
+            if (string.IsNullOrEmpty(password))
+            {
+                return Content(HttpStatusCode.Unauthorized, new { Success = false, Message = "缺少案件密碼" });
+            }
+
+            var existingCase = _caseService.GetCase(caseNumber, password);
             if (existingCase == null)
             {
-                return NotFound();
+                return Content(HttpStatusCode.Unauthorized, new { Success = false, Message = "案件不存在或密碼錯誤" });
             }
 
             var caseDto = new CaseDto
@@ -124,15 +149,27 @@ namespace CaseManagement.WebApi.Controllers
         /// <summary>
         /// 刪除案件
         /// DELETE api/cases/{caseNumber}
+        /// 需要在 Header 中提供 X-Case-Password
         /// </summary>
         [HttpDelete]
         [Route("{caseNumber}")]
         public IHttpActionResult DeleteCase(string caseNumber)
         {
-            var existingCase = _caseService.GetCase(caseNumber);
+            // 從 Header 取得密碼
+            var password = Request.Headers.Contains("X-Case-Password")
+                ? Request.Headers.GetValues("X-Case-Password").FirstOrDefault()
+                : null;
+
+            // 密碼為必填
+            if (string.IsNullOrEmpty(password))
+            {
+                return Content(HttpStatusCode.Unauthorized, new { Success = false, Message = "缺少案件密碼" });
+            }
+
+            var existingCase = _caseService.GetCase(caseNumber, password);
             if (existingCase == null)
             {
-                return NotFound();
+                return Content(HttpStatusCode.Unauthorized, new { Success = false, Message = "案件不存在或密碼錯誤" });
             }
 
             var success = _caseService.DeleteCase(caseNumber);

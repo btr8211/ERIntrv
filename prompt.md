@@ -11,7 +11,7 @@
 資料表(CASEM)欄位
 * 案件編號、密碼、案件日期、案件狀態(收案、已回復)
 資料庫資訊(我之後會填入)
-* Server：SERVER1
-* IP：localhost
-* 帳號：sqlaccount
-* 密碼：sqlpassword
+* Server： SERVER1
+* IP： localhost
+* 帳號： sqlaccount
+* 密碼： sqlpassword

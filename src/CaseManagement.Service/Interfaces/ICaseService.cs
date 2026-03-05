@@ -20,8 +20,9 @@ namespace CaseManagement.Service.Interfaces
         /// 根據案件編號取得案件
         /// </summary>
         /// <param name="caseNumber">案件編號</param>
-        /// <returns>案件資料</returns>
-        CaseDto GetCase(string caseNumber);
+        /// <param name="password">案件密碼</param>
+        /// <returns>案件資料，若密碼不符則回傳 null</returns>
+        CaseDto GetCase(string caseNumber, string password);
 
         /// <summary>
         /// 取得所有案件

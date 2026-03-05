@@ -73,10 +73,16 @@ namespace CaseManagement.Service.Implementations
         }
 
         /// <inheritdoc />
-        public CaseDto GetCase(string caseNumber)
+        public CaseDto GetCase(string caseNumber, string password)
         {
             var entity = _caseRepository.GetByCaseNumber(caseNumber);
             if (entity == null)
+            {
+                return null;
+            }
+
+            // 驗證密碼是否相符
+            if (entity.Password != password)
             {
                 return null;
             }

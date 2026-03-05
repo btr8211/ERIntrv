@@ -121,14 +121,15 @@ namespace CaseManagement.Tests.Services
         }
 
         [Test]
-        public void GetCase_WithExistingCaseNumber_ShouldReturnCase()
+        public void GetCase_WithCorrectPassword_ShouldReturnCase()
         {
             // Arrange
             var caseNumber = "20260303-00001";
+            var password = "123456";
             var entity = new CaseEntity
             {
                 CaseNumber = caseNumber,
-                Password = "123456",
+                Password = password,
                 CaseDate = DateTime.Now,
                 CaseStatus = CaseStatus.Received,
                 Subject = "測試主旨",
@@ -139,7 +140,7 @@ namespace CaseManagement.Tests.Services
                           .Returns(entity);
 
             // Act
-            var result = _caseService.GetCase(caseNumber);
+            var result = _caseService.GetCase(caseNumber, password);
 
             // Assert
             Assert.IsNotNull(result);
@@ -147,16 +148,44 @@ namespace CaseManagement.Tests.Services
         }
 
         [Test]
+        public void GetCase_WithIncorrectPassword_ShouldReturnNull()
+        {
+            // Arrange
+            var caseNumber = "20260303-00001";
+            var correctPassword = "123456";
+            var wrongPassword = "654321";
+            var entity = new CaseEntity
+            {
+                CaseNumber = caseNumber,
+                Password = correctPassword,
+                CaseDate = DateTime.Now,
+                CaseStatus = CaseStatus.Received,
+                Subject = "測試主旨",
+                Content = "測試內容"
+            };
+
+            _mockRepository.Setup(x => x.GetByCaseNumber(caseNumber))
+                          .Returns(entity);
+
+            // Act
+            var result = _caseService.GetCase(caseNumber, wrongPassword);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
         public void GetCase_WithNonExistingCaseNumber_ShouldReturnNull()
         {
             // Arrange
             var caseNumber = "20260303-99999";
+            var password = "123456";
 
             _mockRepository.Setup(x => x.GetByCaseNumber(caseNumber))
                           .Returns((CaseEntity)null);
 
             // Act
-            var result = _caseService.GetCase(caseNumber);
+            var result = _caseService.GetCase(caseNumber, password);
 
             // Assert
             Assert.IsNull(result);
